@@ -1,19 +1,6 @@
-class Solution(object):
-    def sortSentence(self, s):
-        words = s.split()
-        for j in range(len(words)):
-            for i in range(len(words)):
-                smallest = int(words[i][-1])-1
-                words[i], words[smallest] = words[smallest], words[i]
+class Solution:
+    def sortSentence(self, s: str) -> str:
+        s = s.split()
+        s = sorted(s, key=lambda x: x[-1])
+        return " ".join(x[:-1] for x in s)
 
-        original_sentence = ""
-        for i in range(len(words)):
-            words[i] = words[i].strip(words[i][-1])
-            if i == len(words) - 1:
-                original_sentence += words[i]
-            else:
-                original_sentence += words[i] + " "
-
-        return original_sentence
-
-    
