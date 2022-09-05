@@ -1,14 +1,16 @@
-class Solution(object):
-    def largestNumber(self, nums):
-        result = list(map(str, nums))
-        for i in range(len(result)):
-            for j in range(i + 1, len(result)):
-                if result[i] + result[j] < result[j] + result[i]:
-                    result[i], result[j] = result[j], result[i]
-        result = str(int("".join(result)))
+from typing import List
 
-        return result
-        """
-        :type nums: List[int]
-        :rtype: str
-        """
+
+class Solution:
+    def largestNumber(self, nums: List[int]) -> str:
+        nums = list(map(str, nums))
+
+        for i in range(len(nums)):
+            for j in range(i + 1, len(nums)):
+                if nums[i] + nums[j] < nums[j] + nums[i]:
+                    nums[i], nums[j] = nums[j], nums[i]
+
+        return str(int("".join(nums)))
+
+
+
