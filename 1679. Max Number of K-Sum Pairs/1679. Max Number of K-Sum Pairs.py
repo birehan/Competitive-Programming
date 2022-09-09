@@ -1,19 +1,19 @@
-class Solution(object):
-    def maxOperations(self, nums, k):
+from typing import List
+
+
+class Solution:
+    def maxOperations(self, nums: List[int], k: int) -> int:
         nums.sort()
-        left, right, operation = 0, len(nums) - 1, 0
-        while left < right:
-            if nums[left] + nums[right] == k:
-                left += 1
-                right -= 1
-                operation += 1
-            elif nums[left] + nums[right] < k:
-                left += 1
+        l, r = 0 , len(nums)-1
+        max_operation = 0
+        while l < r:
+            summ = nums[l] + nums[r]
+            if summ == k:
+                max_operation += 1
+                l += 1
+                r -= 1
+            elif summ < k:
+                l += 1
             else:
-                right -= 1
-        return operation
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: int
-        """
+                r -= 1
+        return max_operation
