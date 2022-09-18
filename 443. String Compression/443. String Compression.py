@@ -1,31 +1,20 @@
-from typing import List
-
-
 class Solution:
     def compress(self, chars: List[str]) -> int:
-        left = 0
-        right = 1
-        counter = right
+        i = 0
         count = 1
-        while right < len(chars):
-            if chars[left] == chars[right]:
+        
+        for j in range(1, len(chars)+1):
+            if j < len(chars) and chars[j] == chars[j-1]:
                 count += 1
-                c = count
-                co = counter
-                x = [int(a) for a in str(c)]
-
-                for i in x:
-                    chars[co] = str(i)
-                    co += 1
-
-                if count > 2 and right >= co:
-                    chars.pop(right)
-                else:
-                    right += 1
             else:
-                left = right
-                right += 1
-                counter = right
+                chars[i] = chars[j-1]
+                i += 1
+                
+                if  count > 1:
+                    for k in str(count):
+                        chars[i] = k
+                        i += 1
                 count = 1
-
-        return len(chars)
+        return i
+                        
+                
