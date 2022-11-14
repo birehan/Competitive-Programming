@@ -6,12 +6,11 @@ class Solution:
         def invert(string):
             return ''.join(['1'if i == '0' else '0' for i in string])
           
-        def find(n, dic):
+        def find(n=n, dic={0:'0'}):
             if n-1 not in dic:
                 dic[n-1] = find(n-1, dic)
             return dic[n-1] + "1" + reverse(invert(dic[n-1]))
         
-        dic = {0:'0'}
-        res = find(n, dic)
+        res = find()
         
         return res[k-1]
