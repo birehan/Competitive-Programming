@@ -1,21 +1,15 @@
 class Solution:
     def partitionLabels(self, s: str) -> List[int]:
+        dic = {key:index for index, key in enumerate(s)}
+        left = last_position = 0
         answer = []
-        total = ""
-        for index, letter in enumerate(s):
-            if letter not in total:
-                answer.append(letter)
-            else:
-                while len(answer) > 1 and letter not in answer[-1]:
-                    last = answer.pop()
-                    answer[-1] += last
-                answer[-1] += letter
-            total += letter
-
-
-        answer = [len(i) for i in answer]
-       
+        
+        for right, letter in enumerate(s):
+            last_position = max(last_position, dic[letter])
+            if last_position == right:
+                answer.append(right-left+1)
+                left = right + 1
+        
         return answer
-            
-            
+        
 
