@@ -1,26 +1,26 @@
 class Solution:
     def maxSum(self, grid: List[List[int]]) -> int:
-        # compute the prefix sum
-        for i in range(len(grid)):
-            for j in range(1, len(grid[i])):
-                grid[i][j] += grid[i][j-1]
+        row = len(grid)
+        col = len(grid[0])
+        length = 3 
+        def is_valid(i, j):
+            if i+2 < row and j+2 < col:
+                return True
+            return False
         
-        # compute the val
-        def helper(r1, r2):
-            res = 0
-            for c in range(2, len(grid[0])):
-                summ = 0
-                for i in range(3):
-                    if i != 1:
-                        summ += grid[r1+i][c] - (grid[r1+i][c-3] if c >  2 else 0)
-                    else:
-                        summ += grid[r1+i][c-1] - grid[r1+i][c-2]
-                res = max(res, summ)
-            return res
+        def get_sum(i, j):
+            cur_sum = grid[i+1][j+1]
+            for k in range(length):
+                cur_sum += grid[i][j+k]
+                cur_sum += grid[i+length-1][j+k]
+            return cur_sum
 
-        res = 0 
-        for i in range(2, len(grid)):
-            res = max(res, helper(i-2, i))
+        max_sum = 0
+        for i in range(row):
+            for j in range(col): 
+                if is_valid(i, j):
+                    max_sum = max(get_sum(i, j), max_sum)
         
-        return res
-
+        return max_sum
+                    
+       
