@@ -1,17 +1,17 @@
 class Solution:
     def isAlienSorted(self, words: List[str], order: str) -> bool:
+        
         dic = {}
-        letter = 97
-        for i in order:
-            dic[i] = chr(letter)
-            letter += 1
+        for index, val in enumerate(order):
+            dic[val] = index
         
-        def convert(word):
-            res = "".join([dic[i] for i in word])
-            return res
-
-
-        for i in range(len(words)):
-            words[i] = convert(words[i])
+        for i in range(len(words)-1):
+            for j in range(len(words[i])):
+                if j >= len(words[i+1]): 
+                    return False
+                if words[i][j] != words[i+1][j]:
+                    if dic[words[i][j]] > dic[words[i+1][j]]:
+                        return False
+                    break
         
-        return sorted(words) == words
+        return True
