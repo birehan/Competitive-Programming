@@ -1,23 +1,18 @@
 class Solution:
-    def findAnagrams(self, s: str, p: str) -> List[int]:
-        s_dic = Counter(s[:len(p)-1])
-        p_dic = Counter(p)
-        result = []
+    def findAnagrams(seelf, s: str, p: str) -> List[int]:
+        res = []
         left = 0
-        for right in range(len(p)-1, len(s)):
-            s_dic[s[right]] = 1 + s_dic.get(s[right], 0)
-            if s_dic == p_dic:
-                result.append(left)
-            s_dic[s[left]] -= 1
-            if s_dic[s[left]] == 0:
-                del s_dic[s[left]]
-            left += 1
-        
-        return result
+        dic = Counter(p)
+        for right in range(len(s)):
+            if s[right] in dic:
+                dic[s[right]]  -= 1
+            
+            if right - left + 1 == len(p):
+                value = sorted(dic.values())
+                if value[0] >= 0 and sum(value) ==0:
+                    res.append(left)
+                if s[left] in dic:
+                    dic[s[left]] += 1
+                left += 1
 
-      
-        
-
-
-
-      
+        return res
