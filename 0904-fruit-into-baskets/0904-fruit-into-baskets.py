@@ -5,7 +5,7 @@ class Solution:
 
         for right, num in enumerate(fruits):
             store[num] += 1
-            if left < right and len(store.keys()) > 2:
+            while left < right and len(store.keys()) > 2:
                 store[fruits[left]] -= 1
                 if not store[fruits[left]]:
                     del store[fruits[left]]
