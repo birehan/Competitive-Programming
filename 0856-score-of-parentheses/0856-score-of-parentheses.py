@@ -1,12 +1,11 @@
 class Solution:
-    def scoreOfParentheses(self, S: str) -> int:
-        stack = [0] 
-
-        for x in S:
-            if x == '(':
-                stack.append(0)
+    def scoreOfParentheses(self, s: str) -> int:
+        stack = [0]
+        for bracket in s:
+            if bracket == ")":
+                value = stack.pop()
+                stack[-1] += max( value*2, 1)
             else:
-                v = stack.pop()
-                stack[-1] += max(2 * v, 1)
+                stack.append(0)
 
-        return stack.pop()
+        return stack[0]
