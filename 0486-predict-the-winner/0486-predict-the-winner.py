@@ -4,6 +4,7 @@ class Solution:
         # player 1 is positive and player 2 negative
         # return -v
 
+        @cache
         def helper(left, right, turn):
             if left == right:
                 return turn * nums[left]
