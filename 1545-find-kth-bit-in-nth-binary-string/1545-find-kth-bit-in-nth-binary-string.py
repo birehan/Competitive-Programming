@@ -1,16 +1,18 @@
 class Solution:
-    def findKthBit(self, n: int, k: int) -> str:
-        def reverse(string):
-            return string[::-1]
-            
-        def invert(string):
-            return ''.join(['1'if i == '0' else '0' for i in string])
-          
-        def find(n=n, dic={0:'0'}):
-            if n-1 not in dic:
-                dic[n-1] = find(n-1, dic)
-            return dic[n-1] + "1" + reverse(invert(dic[n-1]))
+    def reverse(self, string):
+        return string[::-1]
+    
+    def invert(self, string):
+        inverted = []
+        for s in string:
+            inverted.append("1" if s=="0" else "0")
+        return "".join(inverted)
+
+    def findKthBit(self, n: int, k: int, res="0") -> str:
+        if n == 1:
+            return res[k-1]
+        res = res + "1" + self.reverse(self.invert(res))
+        return self.findKthBit(n-1, k, res)
+
         
-        res = find()
-        
-        return res[k-1]
+    
