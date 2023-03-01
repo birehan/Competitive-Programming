@@ -1,36 +1,36 @@
 class Solution:
     def decodeString(self, s: str) -> str:
-        self.index = 0
-        def helper(result, times):
+        result = []
+        index = 0
 
-            # base case
+        while index < len(s):
+            # if character 
+            if s[index].isalpha():
+                result.append(s[index])
+                index += 1   
 
-            while self.index < len(s) and s[self.index].isalpha():
-                result.append(s[self.index])
-                self.index += 1
-
-            if self.index < len(s) and s[self.index] == "]":
-                self.index += 1
-                return times * result
-
-            num = []
-            while self.index < len(s) and s[self.index].isnumeric():
-                num.append(s[self.index])
-                self.index += 1
-            
-            if num:
-                self.index += 1
-                # print(num, result)
-
-                v = helper([], int("".join(num)))
-                result.extend(v)
-                # print(result)
-            if self.index < len(s):
-                return helper(result, times)
+            # when getting numbers
+            elif s[index].isnumeric():
+                num = []
+                while index < len(s) and s[index].isnumeric():
+                    num.append(s[index])
+                    index += 1
                 
-            return result * times
+                values = []
+                opening = 0
+                index += 1
 
-            
+                # move till the closing of the bracket
+                while index < len(s) and (s[index] != "]" or opening != 0):
+                    values.append(s[index])
+                    opening += 1 if s[index] == "[" else 0
+                    opening -= 1 if s[index] == "]" else 0
+                    index += 1
 
-        return "".join(helper([], 1))
+                # recursive call
+                v = list(self.decodeString("".join(values)))
+                result.extend(v*int("".join(num))) 
+                index += 1
 
+        
+        return "".join(result)
