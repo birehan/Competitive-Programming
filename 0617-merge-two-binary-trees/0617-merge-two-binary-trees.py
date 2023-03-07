@@ -9,10 +9,9 @@ class Solution:
         if not root1 or not root2:
             return root1 or root2
     
-        cur_sum = (root1.val ) + (root2.val)
-        dummy = TreeNode(val=cur_sum)
+        root1.val  += (root2.val)
        
-        dummy.left = self.mergeTrees(root1.left, root2.left)
-        dummy.right = self.mergeTrees(root1.right, root2.right)
+        root1.left = self.mergeTrees(root1.left, root2.left)
+        root1.right = self.mergeTrees(root1.right, root2.right)
 
-        return dummy
+        return root1
