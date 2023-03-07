@@ -16,8 +16,6 @@ class TopVotedCandidate:
         self.values = values
         
     def q(self, t: int) -> int:
-        if t > self.times[-1]:
-            return self.values[-1]
 
         left, right = -1, len(self.times)
 
