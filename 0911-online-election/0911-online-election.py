@@ -1,8 +1,8 @@
 class TopVotedCandidate:
 
     def __init__(self, persons: List[int], times: List[int]):
-        self.times = times
-        values = [0] * len(persons)
+        self.times = times        
+        self.values =  [0] * len(persons)
         freq = defaultdict(int)
         cur_max = 0
 
@@ -11,9 +11,8 @@ class TopVotedCandidate:
             if freq[cur_max] <= freq[persons[i]]:
                 cur_max = persons[i]
 
-            values[i] = cur_max
+            self.values[i] = cur_max
         
-        self.values = values
         
     def q(self, t: int) -> int:
 
