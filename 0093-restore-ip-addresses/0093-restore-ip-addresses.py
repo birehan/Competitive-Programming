@@ -22,9 +22,6 @@ class Solution:
 
 
   def restoreIpAddresses(self, s: str) -> List[str]:
-    if len(s) < 4 or len(s) > 12:
-      return []
-      
     self.answer = []
     self.helper([], 0, s)
     return self.answer
