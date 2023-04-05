@@ -1,16 +1,13 @@
 class Solution:
-    def helper(self, bit, n, index):
+    def countArrangement(self, n: int, bit=0, index =0 ) -> int:
         if index == n:
-            self.count += 1
-            return
-
+            return 1
+        
+        count = 0
         for i in range(n):
             cur = 1 << i
             if not cur & bit:
                 if ((i+1) % (index + 1) == 0) or ((index + 1) % (i + 1) == 0):
-                    self.helper(bit | cur, n, index + 1)
+                    count += self.countArrangement(n, bit | cur, index + 1)
 
-    def countArrangement(self, n: int) -> int:
-        self.count = 0
-        self.helper(0, n, 0)
-        return self.count
+        return count
