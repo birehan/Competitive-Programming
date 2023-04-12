@@ -13,13 +13,11 @@ class Solution:
                     graph[j].append(i)
         
         def dfs(start, visited):
-            if start in visited:
-                return 0
-
             count = 1
             visited.add(start)
             for neighbor in graph[start]:
-                count += dfs(neighbor, visited)
+                if neighbor not in visited:
+                    count += dfs(neighbor, visited)
         
             return count
 
