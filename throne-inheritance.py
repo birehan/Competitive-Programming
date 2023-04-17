@@ -16,9 +16,6 @@ class ThroneInheritance:
         order = []
 
         def dfs(root):
-            if not root:
-                return
-                
             if root not in self.dead:
                 order.append(root)
             
