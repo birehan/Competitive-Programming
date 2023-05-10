@@ -22,7 +22,7 @@ class Solution:
                         visited.add(neighbor)
                         queue.append(neighbor)
                     
-                if neighbor in visited and Indegree[neighbor] != 0:
+                else:
                     return False
         
         return len(visited) == numCourses
