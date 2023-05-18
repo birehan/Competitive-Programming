@@ -1,7 +1,6 @@
 class Solution:
     def union(self, a, b):
-        rootA = self.find(a)
-        rootB = self.find(b)
+        rootA, rootB = self.find(a), self.find(b)
        
         if rootA <= rootB:
             self.root[rootB] = self.root[rootA]
@@ -16,8 +15,7 @@ class Solution:
 
 
     def smallestEquivalentString(self, s1: str, s2: str, baseStr: str) -> str:
-        offset = 97
-        self.root = dict([(chr(i+offset), chr(i+offset)) for i in range(26)])
+        self.root = dict([(chr(i+97), chr(i+97)) for i in range(26)])
         
         for i in range(len(s1)):
             self.union(s1[i], s2[i])
