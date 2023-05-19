@@ -1,25 +1,29 @@
 class Solution:
+    def union(self, a, b, cost):
+        rootA, rootB = self.find(a), self.find(b)
+        
+        if self.rank[rootA] <= self.rank[rootB]:
+            self.rank[rootA] = min(self.rank[rootA], self.rank[rootB], cost)
+            self.root[rootB] = self.root[rootA]
+        else:
+            self.rank[rootB] = min(self.rank[rootA], self.rank[rootB], cost)
+            self.root[rootA] = self.root[rootB]
+        
+    def find(self, a):
+        if self.root[a] != a:
+            self.root[a] = self.find(self.root[a])
+
+        return self.root[a]
+
+
+
     def minScore(self, n: int, roads: List[List[int]]) -> int:
-        dic = defaultdict(list)
-        for a, b, distance in roads:
-            dic[a].append([b, distance])
-            dic[b].append([a, distance])
+        self.root = [i for i in range(n+1)]
+        self.rank = [inf] * (n+1)
+        self.min_cost = inf
 
-        visited = set()
-        self.min_dist = inf
-
-        def helper(cur):
-            if cur in visited:
-                return
-            
-            visited.add(cur)
-
-            for v, dis in dic[cur]:
-                self.min_dist = min(self.min_dist, dis)
-                helper(v)   
-
-
-        helper(1)
         
+        for a, b, cost in roads:
+            self.union(a, b, cost)
         
-        return self.min_dist
+        return self.rank[self.find(n)]
