@@ -1,30 +1,28 @@
 class Solution:
     def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
         graph = defaultdict(list)
+        Indegree = defaultdict(int)
+        source = set([i for i in range(numCourses)])
+
         for a, b in prerequisites:
-            graph[b].append(a)
+            graph[a].append(b)
+            Indegree[b] += 1
 
+            if b in source:
+                source.remove(b)
+
+        queue = deque(list(source))
         dependency = defaultdict(set)
-        visited = set()
+        while queue:
+            cur = queue.popleft()
+            for child in graph[cur]:
+                Indegree[child] -= 1
+                dependency[child] = dependency[child].union(dependency[cur])
+                dependency[child].add(cur)
+
+                if not Indegree[child]:
+                    queue.append(child)
         
-        def helper(node):
-            if node in visited:
-                return dependency[node]
-
-            visited.add(node)
-
-            cur = set(graph[node] if graph[node] else [node])      
-            for root in graph[node]:
-                root_dep =  helper(root)
-                cur = cur.union(root_dep)
-            
-            dependency[node] = cur
-            return cur
-        
-        for i in range(numCourses):
-            if i not in visited:
-                helper(i)
-
         for i in range(len(queries)):
             queries[i] = queries[i][0] in dependency[queries[i][1]]
         
