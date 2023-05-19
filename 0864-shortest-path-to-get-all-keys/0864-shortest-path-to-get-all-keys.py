@@ -3,28 +3,16 @@ class Solution:
         
         row, col = len(grid), len(grid[0])
 
-        def getSource():
-            source = None
-            lettersCount = 0
-            for i in range(row):
-                for j in range(col):
-                    if grid[i][j] == "@":
-                        source =  [i, j]
-                    if grid[i][j].islower():
-                        lettersCount += 1
-
-            return source, lettersCount
+        source = None
+        lettersCount = 0
+        for i in range(row):
+            for j in range(col):
+                if grid[i][j] == "@":
+                    source =  [i, j]
+                if grid[i][j].islower():
+                    lettersCount += 1
         
-        def bitCount(num):
-            bits = 0
-            while num:
-                bits += num & 1
-                num >>= 1
             
-            return bits
-            
-        
-        source,lettersCount  = getSource()
         queue = deque([(source[0], source[1], 0, 0)])
         dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]]
         
@@ -34,7 +22,7 @@ class Solution:
             if (r, c, bit) in visited:
                 continue
             
-            if bitCount(bit) == lettersCount:
+            if bit == (1 << lettersCount) - 1:
                 return level
             
             visited.add((r, c, bit))
