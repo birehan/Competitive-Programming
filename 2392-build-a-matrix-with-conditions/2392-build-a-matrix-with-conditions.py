@@ -5,18 +5,16 @@ class Solution:
         def helper(conditions):
             graph = defaultdict(list)
             indegree = defaultdict(int)
+            source = set([i for i in range(1, k+1)])
 
             for a, b in conditions:
                 graph[a].append(b)
-                indegree[b] += 1    
-            
-            source = set()
-            for i in range(1, k+1):
-                if indegree[i] == 0:
-                    source.add(i)
+                indegree[b] += 1
+
+                if b in source:
+                    source.remove(b)
             
             queue = deque(list(source))
-            visited = source
             level = 0
             while queue:
                 cur = queue.popleft()
@@ -24,22 +22,15 @@ class Solution:
 
                 for child in graph[cur]:
                     indegree[child] -= 1
-                    if not indegree[child] and child not in visited:
+                    if not indegree[child]:
                         queue.append(child)
-                        visited.add(child)
                 
                 level += 1
-            for key, value in indegree.items():
-               
-                if value != 0:
-                    return False
             
-            return True
+            return True if level == k else False
             
-        if not helper(rowConditions):
-            return []
-        if not helper(colConditions):
-            return []
+        if not helper(rowConditions): return []
+        if not helper(colConditions): return []
 
         answer = [[0 for i in range(k)] for _ in range(k)]
         for key, value in positions.items():
