@@ -1,24 +1,28 @@
 class MedianFinder:
 
     def __init__(self):
-        self.array = []
+        self.heap1 = []
+        self.heap2 = []
 
     def addNum(self, num: int) -> None:
-        index = bisect_left(self.array, num)
-        self.array.insert(index, num)
+        heappush(self.heap1, num)
         
+        while len(self.heap1) - len(self.heap2) > 2:
+            heappush(self.heap2, -heappop(self.heap1))
+        
+        if self.heap1 and self.heap2 and -self.heap2[0] > self.heap1[0]:
+            a, b = heappop(self.heap1), heappop(self.heap2)
+            heappush(self.heap1, -b)
+            heappush(self.heap2, -a)
+
 
     def findMedian(self) -> float:
-        length = len(self.array)
-        if length % 2 == 0:
-            return (self.array[length//2] + self.array[(length//2)-1])/2
+        if (len(self.heap1) + len(self.heap2)) % 2 == 1:
+            return self.heap1[0]
         else:
-            return self.array[length//2]
-            
+            num1, num2 = heappop(self.heap1), heappop(self.heap1)
+            heappush(self.heap1, num1)
+            heappush(self.heap1, num2)
+
+            return (num1 + num2)/2
         
-
-
-# Your MedianFinder object will be instantiated and called as such:
-# obj = MedianFinder()
-# obj.addNum(num)
-# param_2 = obj.findMedian()
