@@ -1,17 +1,18 @@
 class Solution:
-    def helper(self, index, cur_sum):
-        if index == len(self.nums):
-            if cur_sum == self.target: return 1
-            return 0
-        
-        if (index, cur_sum) not in self.dp:
-            self.dp[(index, cur_sum)] = self.helper(index+1, cur_sum - self.nums[index]) + self.helper(index+1, cur_sum + self.nums[index])
-        
-        return self.dp[(index, cur_sum)]
-
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-       self.nums = nums
-       self.target = target
-       self.dp = defaultdict(int)
-       
-       return self.helper(0, 0)
+        dic = Counter()
+        dic[nums[0]] += 1
+        dic[-nums[0]] += 1
+
+        for i in range(1, len(nums)):
+            dic1 = Counter()
+            for key, value in dic.items():
+                dic1[key+nums[i]] += value
+            
+            for key, value in dic.items():
+                dic1[key-nums[i]] += value
+            
+            dic = dic1
+     
+        return dic[target]
+        
