@@ -1,23 +1,7 @@
 class Solution:
-    def helper(self, n, dp):
-        if n in  [0, 1]:
-            return self.cost[n]
-        
-        if n not in dp:
-            dp[n] = self.cost[n] + min(self.helper(n-1, dp), self.helper(n-2, dp))
-        return dp[n]
-
     def minCostClimbingStairs(self, cost: List[int]) -> int:
-        self.cost = [0] + cost + [0]
-        dp = defaultdict(int)
+        cost.append(0)
+        for i in range(2, len(cost)):
+            cost[i] += min(cost[i-1], cost[i-2])
         
-        self.helper(len(self.cost)-1, dp)
-        return dp[len(self.cost)-1]
-
-        
-      
-            
-        
-            
-            
-        
+        return cost[-1]        
