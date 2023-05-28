@@ -9,11 +9,11 @@ class Solution:
             for key, value in dic.items():
                 dic1[key+nums[i]] += value
             
-            dic2 = Counter()
-            for key, value in dic.items():
-                dic2[key-nums[i]] += value
             
-            dic = dic1 + dic2
+            for key, value in dic.items():
+                dic1[key-nums[i]] += value
+            
+            dic = dic1
 
      
         return dic[target]
