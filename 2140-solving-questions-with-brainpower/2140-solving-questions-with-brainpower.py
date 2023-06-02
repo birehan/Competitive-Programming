@@ -1,8 +1,16 @@
 class Solution:
     def mostPoints(self, questions: List[List[int]]) -> int:
-        N = len(questions)
-        DP = [0] * (N+1)
-        for i in range(N-1, -1, -1):
-            p, b = questions[i]
-            DP[i] = max(p + DP[min(N, i + b + 1)], DP[i+1])
-        return DP[0]
+        dp = defaultdict(int)
+        max_value = 0
+
+        for i in range(len(questions)):
+            max_value = max(max_value, dp[i])
+            pointi, poweri = questions[i]
+            dp[i+poweri+1] = max(dp[i+poweri+1], pointi + max_value) 
+           
+
+        
+        return max(dp.values())
+
+
+        
