@@ -3,6 +3,7 @@ class Solution:
         dic = defaultdict(int)
         dic[(0, 0)] = 1
 
+
         for i in range(1, len(nums)):
             for j in range(i):
                 sign = 0
