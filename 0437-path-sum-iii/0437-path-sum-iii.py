@@ -5,22 +5,29 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def helper(self, root, cur_sum, targetSum):
-        if not root:
-            return 
-        cur_sum += root.val
-        self.count += self.dic[cur_sum - targetSum] 
-        self.dic[cur_sum] += 1
-        
-    
-        self.helper(root.left, cur_sum, targetSum)
-        self.helper(root.right, cur_sum, targetSum)
-        self.dic[cur_sum] -= 1
-
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
-        self.dic = defaultdict(int)
-        self.dic[0] = 1
-        self.count = 0
-        self.helper(root, 0, targetSum)
+        if not root:
+            return 0
+            
+        dic = {0:1}
 
-        return self.count
+        def dfs(node, curSum):
+        
+            count = dic.get(curSum - targetSum, 0)
+            dic[curSum] = dic.get(curSum, 0) + 1
+
+            if node.left:
+                count += dfs(node.left, curSum + node.left.val)
+
+            if node.right:
+                count += dfs(node.right, curSum + node.right.val)
+            
+            dic[curSum] -= 1
+            
+            return count
+
+        
+        return dfs(root, root.val)
+            
+
+        
