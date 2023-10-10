@@ -1,16 +1,19 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        count1 = Counter(s1)
-        count2 = defaultdict(int)
+        counter = Counter(s1)
         left = 0
-        for right, string in enumerate(s2):
-            count2[string] += 1
-            if count1 == count2:
-                return True
+
+        for right, st in enumerate(s2):
+            if st in counter:
+                counter[st] -= 1
+            
             if right - left + 1 == len(s1):
-                count2[s2[left]] -= 1
-                if not count2[s2[left]]:
-                    del count2[s2[left]]
+                if all(v == 0 for v in counter.values()):
+                    return True
+
+                if s2[left] in counter:
+                    counter[s2[left]] += 1
+                
                 left += 1
         
         return False
