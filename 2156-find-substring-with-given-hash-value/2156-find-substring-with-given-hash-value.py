@@ -1,13 +1,10 @@
 class Solution:
     def subStrHash(self, s: str, power: int, modulo: int, k: int, hashValue: int) -> str:
         powers = (power ** (k-1)) % modulo        
-        left = 0
-        value = 0
-        m = len(s)
+        left = value = ans = 0
         s = s[::-1]
-        ans = None
 
-        for right in range(m):
+        for right in range(len(s)):
             value = ((value * power)% modulo + ((ord(s[right]) - 96)%modulo)) % modulo
 
             if right - left + 1 == k:
@@ -17,8 +14,8 @@ class Solution:
                 value = (value - ((ord(s[left]) - 96)%modulo * powers)) % modulo
 
                 left += 1
-        if ans == None:
+
+        if ans == 0:
             return -1
          
-        res = s[ans-k:ans]
-        return res[::-1]
+        return s[ans-k:ans][::-1]
