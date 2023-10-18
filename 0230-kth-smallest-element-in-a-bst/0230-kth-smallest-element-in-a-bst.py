@@ -4,22 +4,26 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution:  
-    def helper(self, root, k):
-        if not root:
-            return 0
-    
-        left = self.helper(root.left, k)
-        if  left + 1 == k and self.value == -1:
-            self.value = root.val
-            return 0
-
-        right = self.helper(root.right, k - left-1)
-        
-        return left + right + 1
-
+class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        self.value = -1            
-        self.helper(root, k)
-        return self.value
+        self.k = k
+        self.ans = None
 
+        def dfs(root):
+            if self.ans or not root:
+                return 
+            
+            dfs(root.left)
+
+            if self.k == 1:
+                self.ans = root.val
+                self.k -= 1
+                return
+
+            self.k -= 1
+            dfs(root.right)
+        
+        dfs(root)
+        return self.ans
+        
+        
