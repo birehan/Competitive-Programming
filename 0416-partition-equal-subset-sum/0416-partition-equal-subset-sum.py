@@ -5,8 +5,6 @@ class Solution:
         if summ % 2 != 0:
             return False
         
-        nums.sort()
-
         @cache
         def dfs(total, index):
             if index >= len(nums):
