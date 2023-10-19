@@ -13,11 +13,10 @@ class Solution:
         while queue:
             node = queue.popleft()
             for child, child_time in graph[node]:
-                if child_time >= time[node]:
-                    if child_time < time[child]:
-                        time[child] = child_time
-                        queue.append(child)
-                        visited.add(child)
+                if child_time >= time[node] and child_time < time[child]:
+                    time[child] = child_time
+                    queue.append(child)
+                    visited.add(child)
         
         return visited
         
