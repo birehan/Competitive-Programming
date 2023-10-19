@@ -4,10 +4,7 @@ class Solution:
         for a, b, time in meetings:
             graph[a].append([b, time])
             graph[b].append([a, time])
-        
-        for node in graph:
-            graph[node].sort(key=lambda x:x[1])
-        
+       
         queue = deque([0, firstPerson])
         time = [inf] * n
         time[0] = time[firstPerson] = 0
